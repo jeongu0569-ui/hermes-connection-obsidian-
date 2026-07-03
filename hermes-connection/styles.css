@@ -890,3 +890,58 @@
   opacity: 0.62;
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--text-normal) 6%, transparent);
 }
+
+.hermes-remote-tool {
+  color: var(--text-muted);
+}
+
+.hermes-remote-tool-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.hermes-remote-tool-summary::-webkit-details-marker {
+  display: none;
+}
+
+.hermes-remote-tool-summary::after {
+  content: "›";
+  opacity: 0.72;
+  transform: rotate(0deg);
+  transition: transform 150ms ease;
+}
+
+.hermes-remote-tool[open] .hermes-remote-tool-summary::after {
+  transform: rotate(90deg);
+}
+
+.hermes-remote-tool-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--text-faint);
+  opacity: 0.85;
+  flex: 0 0 auto;
+}
+
+.hermes-remote-tool-label {
+  font-family: var(--font-monospace);
+  color: var(--text-muted);
+}
+
+.hermes-remote-tool-body {
+  margin-top: 7px;
+  padding: 8px 10px;
+  border-left: 1px solid var(--background-modifier-border);
+  color: var(--text-faint);
+  font-family: var(--font-monospace);
+  font-size: 11px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
