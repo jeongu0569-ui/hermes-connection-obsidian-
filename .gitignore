@@ -3,3 +3,5 @@ data.json
 .DS_Store
 node_modules/
 dist/
+hermes-connection/data.json
+.obsidian/plugins/hermes-connection/data.json
