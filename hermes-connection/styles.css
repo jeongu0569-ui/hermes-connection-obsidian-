@@ -1,0 +1,892 @@
+.hermes-remote-root {
+  --hermes-chat-max-width: 820px;
+  --hermes-bubble-radius: 8px;
+  --hermes-panel-bg: color-mix(in srgb, var(--background-secondary) 56%, var(--background-primary));
+  --hermes-surface-bg: color-mix(in srgb, var(--background-primary) 72%, var(--background-secondary));
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  background: var(--hermes-panel-bg);
+}
+
+.hermes-remote-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px 8px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  background: var(--background-primary);
+}
+
+.hermes-remote-title-block {
+  min-width: 0;
+}
+
+.hermes-remote-header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.hermes-remote-title {
+  color: var(--text-normal);
+  font-size: var(--font-ui-medium);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.hermes-remote-subtitle,
+.hermes-remote-status,
+.hermes-remote-input-hint,
+.hermes-remote-approval-state {
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+}
+
+.hermes-remote-toolbar {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 4px;
+  min-height: 38px;
+  padding: 3px 10px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  background: var(--background-primary);
+}
+
+.hermes-remote-select {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  height: 30px;
+  padding-inline: 8px 22px;
+  border: none !important;
+  border-radius: 6px;
+  background-color: transparent !important;
+  color: var(--text-muted);
+  box-shadow: none !important;
+  font-size: var(--font-ui-smaller);
+  text-overflow: ellipsis;
+}
+
+.hermes-remote-ghost-button,
+.hermes-remote-icon-button,
+.hermes-remote-toolbar-button {
+  border-radius: 6px;
+}
+
+.hermes-remote-icon-button,
+.hermes-remote-toolbar-button {
+  min-width: 32px;
+}
+
+.hermes-remote-icon-button,
+.hermes-remote-toolbar-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0 !important;
+  outline: 0;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--text-muted);
+  box-shadow: none !important;
+  appearance: none;
+}
+
+.hermes-remote-toolbar-button:hover,
+.hermes-remote-toolbar-button:focus-visible,
+.hermes-remote-send-button:hover,
+.hermes-remote-send-button:focus-visible,
+.hermes-remote-at-button:hover,
+.hermes-remote-at-button:focus-visible {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--text-normal);
+  box-shadow: none !important;
+}
+
+.hermes-remote-toolbar-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.hermes-remote-connection-status {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  padding: 2px 8px 2px 9px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 999px;
+  background: var(--background-secondary);
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.hermes-remote-connection-status::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--text-faint);
+}
+
+.hermes-remote-connection-status.is-connected::before {
+  background: var(--color-green);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-green) 18%, transparent);
+}
+
+.hermes-remote-connection-status.is-connecting::before {
+  background: var(--color-yellow);
+}
+
+.hermes-remote-connection-status.is-disconnected::before {
+  background: var(--color-red);
+}
+
+.hermes-remote-log {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 16px 12px 8px;
+  background: var(--hermes-panel-bg);
+}
+
+.hermes-remote-message {
+  width: min(100%, var(--hermes-chat-max-width));
+  margin: 0 auto 14px;
+  padding: 0;
+  color: var(--text-normal);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: var(--line-height-normal);
+}
+
+.hermes-remote-message[data-role="user"] {
+  width: fit-content;
+  max-width: min(86%, var(--hermes-chat-max-width));
+  margin-left: auto;
+  margin-right: max(0px, calc((100% - var(--hermes-chat-max-width)) / 2));
+  padding: 10px 12px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--hermes-bubble-radius);
+  background: var(--background-secondary);
+}
+
+.hermes-remote-message[data-role="assistant"] {
+  padding: 2px 2px 2px 12px;
+  border-left: 2px solid var(--interactive-accent);
+}
+
+.hermes-remote-message[data-role="tool"],
+.hermes-remote-message[data-role="system"],
+.hermes-remote-message[data-role="reasoning"] {
+  padding: 8px 10px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--hermes-bubble-radius);
+  background: var(--background-secondary-alt);
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+}
+
+.hermes-remote-message[data-role="reasoning"] {
+  padding: 0;
+  border-color: color-mix(in srgb, var(--text-muted) 18%, transparent);
+  background: color-mix(in srgb, var(--background-primary) 72%, var(--background-secondary));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-normal) 6%, transparent);
+}
+
+.hermes-remote-reasoning {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--hermes-bubble-radius);
+}
+
+.hermes-remote-reasoning::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    color-mix(in srgb, var(--text-normal) 5%, transparent) 42%,
+    color-mix(in srgb, var(--text-normal) 12%, transparent) 50%,
+    color-mix(in srgb, var(--text-normal) 5%, transparent) 58%,
+    transparent 100%
+  );
+  opacity: 0.72;
+  transform: translateX(-120%);
+  animation: hermes-thinking-sheen 2.2s ease-in-out infinite;
+}
+
+.hermes-remote-reasoning-summary {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 7px 10px;
+  list-style: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+  font-weight: 500;
+  user-select: none;
+}
+
+.hermes-remote-reasoning-summary::-webkit-details-marker {
+  display: none;
+}
+
+.hermes-remote-reasoning-summary::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  margin-left: auto;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  opacity: 0.72;
+  transform: rotate(45deg);
+  transition: transform 0.16s ease;
+}
+
+.hermes-remote-reasoning[open] .hermes-remote-reasoning-summary::after {
+  transform: rotate(225deg);
+}
+
+.hermes-remote-thinking-dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--text-normal) 84%, var(--interactive-accent));
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--text-normal) 8%, transparent),
+    0 0 16px color-mix(in srgb, var(--text-normal) 34%, transparent);
+  animation: hermes-thinking-pulse 1.25s ease-in-out infinite;
+}
+
+.hermes-remote-thinking-label {
+  color: color-mix(in srgb, var(--text-normal) 88%, var(--text-muted));
+}
+
+.hermes-remote-thinking-state {
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+}
+
+.hermes-remote-reasoning-body {
+  position: relative;
+  z-index: 1;
+  max-height: 320px;
+  margin: 0;
+  padding: 0 10px 10px 26px;
+  overflow: auto;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+@keyframes hermes-thinking-pulse {
+  0%,
+  100% {
+    opacity: 0.46;
+    transform: scale(0.86);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes hermes-thinking-sheen {
+  0% {
+    transform: translateX(-120%);
+  }
+
+  56%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hermes-remote-reasoning::before,
+  .hermes-remote-thinking-dot {
+    animation: none;
+  }
+}
+
+.hermes-remote-composer {
+  flex-shrink: 0;
+  margin-top: auto;
+  padding: 6px 10px 8px;
+  background: var(--hermes-panel-bg);
+}
+
+.hermes-remote-input-box {
+  width: min(100%, var(--hermes-chat-max-width));
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  background: var(--hermes-surface-bg);
+  overflow: visible;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.hermes-remote-input-box:focus-within {
+  border-color: var(--background-modifier-border-hover);
+  box-shadow: 0 0 0 1px var(--background-modifier-border-hover);
+}
+
+.hermes-remote-input {
+  width: 100%;
+  min-height: 56px;
+  max-height: 180px;
+  padding: 10px 12px 2px;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  color: var(--text-normal);
+  font: inherit;
+  line-height: var(--line-height-normal);
+  box-shadow: none;
+}
+
+.hermes-remote-input:hover,
+.hermes-remote-input:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background: transparent;
+}
+
+.hermes-remote-mention-menu {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: calc(100% + 8px);
+  z-index: 10;
+  max-height: 360px;
+  overflow: auto;
+  padding: 0;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  background: var(--background-primary);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16);
+}
+
+.hermes-remote-mention-list {
+  padding: 8px;
+}
+
+.hermes-remote-mention-search-input {
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  border: none;
+  border-top: 1px solid var(--background-modifier-border);
+  border-radius: 0;
+  background: transparent;
+  color: var(--text-normal);
+  font: inherit;
+  box-shadow: none;
+}
+
+.hermes-remote-mention-search-input:focus {
+  border-top: 1px solid var(--background-modifier-border);
+  box-shadow: none;
+}
+
+.hermes-remote-mention-menu.is-hidden {
+  display: none;
+}
+
+.hermes-remote-mention-item {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.hermes-remote-mention-item:hover,
+.hermes-remote-mention-item.is-selected {
+  background: var(--background-secondary);
+}
+
+.hermes-remote-mention-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+
+.hermes-remote-mention-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.hermes-remote-mention-label {
+  color: var(--interactive-accent);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hermes-remote-mention-detail {
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hermes-remote-mention-main {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.hermes-remote-mention-kind {
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  padding: 1px 4px;
+}
+
+.hermes-remote-context-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 24px;
+  padding: 6px 8px 0;
+}
+
+.hermes-remote-context-chips.is-empty {
+  min-height: 0;
+  padding-top: 0;
+}
+
+.hermes-remote-context-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 100%;
+  padding: 3px 6px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  background: var(--background-secondary);
+  color: var(--text-normal);
+  font-size: var(--font-ui-smaller);
+}
+
+.hermes-remote-chip-icon,
+.hermes-remote-chip-detail {
+  color: var(--text-muted);
+}
+
+.hermes-remote-chip-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hermes-remote-chip-remove {
+  min-width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  box-shadow: none;
+}
+
+.hermes-remote-composer-actions,
+.hermes-remote-row {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.hermes-remote-composer-actions {
+  justify-content: space-between;
+  padding: 0 7px 7px;
+  min-width: 0;
+}
+
+.hermes-remote-composer-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 0 0 auto;
+  overflow: visible;
+}
+
+.hermes-remote-composer-options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  min-width: 0;
+  flex: 1 1 auto;
+  margin-left: auto;
+}
+
+.hermes-remote-composer-right {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-left: auto;
+}
+
+.hermes-remote-composer-right .hermes-remote-input-hint {
+  display: none;
+}
+
+.hermes-remote-at-button {
+  flex: 0 0 auto;
+  min-width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0 !important;
+  border-radius: 999px;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--text-muted);
+  font-weight: 700;
+  box-shadow: none !important;
+  appearance: none;
+}
+
+.hermes-remote-pill-select {
+  width: fit-content;
+  min-width: 0;
+  max-width: 100%;
+  height: 30px;
+  padding: 0 4px 0 0;
+  border: none !important;
+  border-radius: 0;
+  background-color: transparent !important;
+  color: var(--text-muted) !important;
+  font-size: var(--font-ui-smaller);
+  font-weight: 500;
+  box-shadow: none !important;
+  appearance: auto;
+  field-sizing: content;
+  text-overflow: ellipsis;
+}
+
+.hermes-remote-access-pill,
+.hermes-remote-reasoning-pill {
+  flex: 0 0 auto;
+  width: 56px;
+}
+
+.hermes-remote-pill-select:hover,
+.hermes-remote-pill-select:focus {
+  color: var(--text-normal) !important;
+}
+
+.hermes-remote-model-pill {
+  flex: 0 1 auto;
+  width: fit-content;
+  max-width: min(42vw, 190px);
+}
+
+.hermes-remote-model-button {
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.hermes-remote-send-button {
+  min-width: 36px;
+  width: 36px;
+  height: 32px;
+  padding: 0;
+  border: 0 !important;
+  border-radius: 999px;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--text-muted);
+  box-shadow: none !important;
+  appearance: none;
+}
+
+.hermes-remote-send-button svg {
+  width: 22px;
+  height: 22px;
+}
+
+@media (max-width: 520px) {
+  .hermes-remote-header {
+    padding: 8px 10px 6px;
+  }
+
+  .hermes-remote-title-block {
+    display: none;
+  }
+
+  .hermes-remote-toolbar {
+    padding-inline: 8px;
+  }
+
+  .hermes-remote-connection-status {
+    max-width: 56vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .hermes-remote-input {
+    min-height: 48px;
+  }
+
+  .hermes-remote-composer-options {
+    gap: 8px;
+  }
+
+  .hermes-remote-model-pill {
+    max-width: min(36vw, 150px);
+  }
+}
+
+.hermes-model-modal {
+  min-width: min(760px, 92vw);
+}
+
+.hermes-model-modal-header {
+  padding-bottom: 10px;
+}
+
+.hermes-model-modal-title {
+  color: var(--text-normal);
+  font-size: var(--font-ui-large);
+  font-weight: 650;
+}
+
+.hermes-model-modal-subtitle {
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  margin-top: 2px;
+}
+
+.hermes-model-search {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.hermes-model-modal-body {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.38fr) minmax(260px, 1fr);
+  gap: 10px;
+  min-height: 360px;
+  max-height: min(560px, 70vh);
+}
+
+.hermes-model-providers,
+.hermes-model-list {
+  min-height: 0;
+  overflow: auto;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  background: var(--background-primary);
+}
+
+.hermes-model-provider,
+.hermes-model-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 7px 9px;
+  cursor: pointer;
+}
+
+.hermes-model-provider:hover,
+.hermes-model-provider.is-selected,
+.hermes-model-row:hover,
+.hermes-model-row.is-selected {
+  background: var(--background-secondary);
+}
+
+.hermes-model-provider-count,
+.hermes-model-provider-name,
+.hermes-model-current {
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+}
+
+.hermes-model-provider-count {
+  margin-left: auto;
+}
+
+.hermes-model-check {
+  width: 14px;
+  color: var(--interactive-accent);
+}
+
+.hermes-model-row-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.hermes-model-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-normal);
+  font-family: var(--font-monospace);
+  font-size: var(--font-ui-smaller);
+}
+
+.hermes-model-current {
+  flex: 0 0 auto;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 999px;
+  padding: 1px 6px;
+}
+
+.hermes-model-empty {
+  padding: 14px;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+}
+
+.hermes-model-visibility-modal {
+  min-width: min(420px, 92vw);
+}
+
+.hermes-model-visibility-actions {
+  display: flex;
+  gap: 8px;
+  padding-bottom: 8px;
+}
+
+.hermes-model-visibility-list {
+  max-height: min(520px, 62vh);
+  overflow: auto;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  background: var(--background-primary);
+}
+
+.hermes-model-visibility-provider {
+  padding: 10px 12px 4px;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.hermes-model-visibility-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 32px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.hermes-model-visibility-row:hover {
+  background: var(--background-secondary);
+}
+
+.hermes-model-visibility-name {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-normal);
+  font-family: var(--font-monospace);
+  font-size: var(--font-ui-smaller);
+}
+
+.hermes-model-visibility-toggle {
+  flex: 0 0 auto;
+}
+
+.hermes-remote-send-button svg {
+  width: 25px;
+  height: 25px;
+}
+
+.hermes-remote-send-button:disabled {
+  opacity: 0.65;
+}
+
+.hermes-remote-approval-row {
+  margin-top: 8px;
+}
+
+.hermes-remote-diagnostics {
+  white-space: pre-wrap;
+  font-family: var(--font-monospace);
+  font-size: var(--font-ui-smaller);
+  background: var(--background-secondary);
+  border-radius: 8px;
+  padding: 8px;
+}
+
+@media (max-width: 420px) {
+  .hermes-remote-composer-actions {
+    gap: 6px;
+  }
+
+  .hermes-remote-composer-options {
+    gap: 6px;
+  }
+
+  .hermes-remote-pill-select {
+    font-size: var(--font-ui-smaller);
+  }
+
+  .hermes-remote-model-pill {
+    max-width: 112px;
+  }
+
+  .hermes-remote-input-hint {
+    display: none;
+  }
+}
+
+.hermes-remote-reasoning:not([open])::before {
+  animation: none;
+  opacity: 0;
+}
+
+.hermes-remote-reasoning:not([open]) .hermes-remote-thinking-dot {
+  animation: none;
+  opacity: 0.62;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--text-normal) 6%, transparent);
+}

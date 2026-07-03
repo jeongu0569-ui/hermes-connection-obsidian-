@@ -1,0 +1,5 @@
+data.json
+*.bak
+.DS_Store
+node_modules/
+dist/

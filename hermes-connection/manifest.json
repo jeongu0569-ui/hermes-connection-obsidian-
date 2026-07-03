@@ -1,0 +1,10 @@
+{
+  "id": "hermes-connection",
+  "name": "Hermes Connection",
+  "version": "0.1.0",
+  "minAppVersion": "1.11.4",
+  "description": "Use Obsidian as a remote chat client for a Hermes home server.",
+  "author": "",
+  "authorUrl": "",
+  "isDesktopOnly": false
+}
