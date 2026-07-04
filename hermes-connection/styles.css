@@ -57,12 +57,46 @@
   background: var(--background-primary);
 }
 
-.hermes-remote-select {
-  flex: 1 1 auto;
+.hermes-remote-select-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
   min-width: 0;
   max-width: 100%;
+}
+
+.hermes-remote-project-wrap {
+  flex: 0 0 clamp(122px, 30%, 172px);
+  max-width: 42%;
+}
+
+.hermes-remote-session-wrap {
+  flex: 1 1 auto;
+}
+
+.hermes-remote-select-icon {
+  position: absolute;
+  left: 7px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  color: var(--text-faint);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hermes-remote-select-icon svg {
+  width: 15px;
+  height: 15px;
+}
+
+.hermes-remote-select {
+  width: 100%;
+  min-width: 0;
   height: 30px;
-  padding-inline: 8px 22px;
+  padding-inline: 27px 15px;
   border: none !important;
   border-radius: 6px;
   background-color: transparent !important;
@@ -70,6 +104,15 @@
   box-shadow: none !important;
   font-size: var(--font-ui-smaller);
   text-overflow: ellipsis;
+}
+
+.hermes-remote-project-select {
+  width: auto;
+  max-width: 100%;
+}
+
+.hermes-remote-session-select {
+  max-width: 100%;
 }
 
 .hermes-remote-ghost-button,
@@ -106,7 +149,9 @@
 .hermes-remote-send-button:hover,
 .hermes-remote-send-button:focus-visible,
 .hermes-remote-at-button:hover,
-.hermes-remote-at-button:focus-visible {
+.hermes-remote-at-button:focus-visible,
+.hermes-remote-message-copy-button:hover,
+.hermes-remote-message-copy-button:focus-visible {
   background: transparent !important;
   background-color: transparent !important;
   color: var(--text-normal);
@@ -161,9 +206,12 @@
   overflow: auto;
   padding: 16px 12px 8px;
   background: var(--hermes-panel-bg);
+  user-select: text;
+  -webkit-user-select: text;
 }
 
 .hermes-remote-message {
+  position: relative;
   width: min(100%, var(--hermes-chat-max-width));
   margin: 0 auto 14px;
   padding: 0;
@@ -171,6 +219,8 @@
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   line-height: var(--line-height-normal);
+  user-select: text;
+  -webkit-user-select: text;
 }
 
 .hermes-remote-message[data-role="user"] {
@@ -185,21 +235,86 @@
 }
 
 .hermes-remote-message[data-role="assistant"] {
-  padding: 2px 2px 2px 12px;
-  border-left: 2px solid var(--interactive-accent);
+  padding: 10px 38px 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--background-modifier-border) 78%, transparent);
+  border-left: 2px solid color-mix(in srgb, var(--interactive-accent) 82%, var(--background-modifier-border));
+  border-radius: var(--hermes-bubble-radius);
+  background: color-mix(in srgb, var(--background-primary) 72%, var(--background-secondary));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-normal) 4%, transparent);
 }
 
+.hermes-remote-markdown {
+  user-select: text;
+  -webkit-user-select: text;
+  white-space: normal;
+}
+
+.hermes-remote-markdown > :first-child {
+  margin-top: 0;
+}
+
+.hermes-remote-markdown > :last-child {
+  margin-bottom: 0;
+}
+
+.hermes-remote-markdown p,
+.hermes-remote-markdown ul,
+.hermes-remote-markdown ol,
+.hermes-remote-markdown pre,
+.hermes-remote-markdown blockquote {
+  margin-block: 0.45em;
+}
+
+.hermes-remote-markdown code {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.hermes-remote-message-copy-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0 !important;
+  border-radius: 999px;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--text-faint);
+  opacity: 0;
+  box-shadow: none !important;
+  appearance: none;
+  transition: opacity 0.12s ease, color 0.12s ease;
+}
+
+.hermes-remote-message:hover .hermes-remote-message-copy-button,
+.hermes-remote-message-copy-button:focus-visible {
+  opacity: 1;
+}
+
+.hermes-remote-message-copy-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.hermes-remote-message[data-role="activity"],
 .hermes-remote-message[data-role="tool"],
 .hermes-remote-message[data-role="system"],
 .hermes-remote-message[data-role="reasoning"] {
-  padding: 8px 10px;
+  margin-bottom: 6px;
+  padding: 5px 8px;
   border: 1px solid var(--background-modifier-border);
   border-radius: var(--hermes-bubble-radius);
   background: var(--background-secondary-alt);
   color: var(--text-muted);
-  font-size: var(--font-ui-small);
+  font-size: var(--font-ui-smaller);
 }
 
+.hermes-remote-message[data-role="activity"],
 .hermes-remote-message[data-role="reasoning"] {
   padding: 0;
   border-color: color-mix(in srgb, var(--text-muted) 18%, transparent);
@@ -207,12 +322,14 @@
   box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-normal) 6%, transparent);
 }
 
+.hermes-remote-activity,
 .hermes-remote-reasoning {
   position: relative;
   overflow: hidden;
   border-radius: var(--hermes-bubble-radius);
 }
 
+.hermes-remote-activity::before,
 .hermes-remote-reasoning::before {
   content: "";
   position: absolute;
@@ -226,31 +343,39 @@
     color-mix(in srgb, var(--text-normal) 5%, transparent) 58%,
     transparent 100%
   );
-  opacity: 0.72;
+  opacity: 0;
   transform: translateX(-120%);
+  animation: none;
+}
+
+.hermes-remote-reasoning.is-active::before {
+  opacity: 0.72;
   animation: hermes-thinking-sheen 2.2s ease-in-out infinite;
 }
 
+.hermes-remote-activity-summary,
 .hermes-remote-reasoning-summary {
   position: relative;
   z-index: 1;
   display: flex;
   align-items: center;
-  gap: 8px;
-  min-height: 34px;
-  padding: 7px 10px;
+  gap: 6px;
+  min-height: 26px;
+  padding: 4px 8px;
   list-style: none;
   cursor: pointer;
   color: var(--text-muted);
-  font-size: var(--font-ui-small);
+  font-size: var(--font-ui-smaller);
   font-weight: 500;
   user-select: none;
 }
 
+.hermes-remote-activity-summary::-webkit-details-marker,
 .hermes-remote-reasoning-summary::-webkit-details-marker {
   display: none;
 }
 
+.hermes-remote-activity-summary::after,
 .hermes-remote-reasoning-summary::after {
   content: "";
   width: 7px;
@@ -263,6 +388,7 @@
   transition: transform 0.16s ease;
 }
 
+.hermes-remote-activity[open] .hermes-remote-activity-summary::after,
 .hermes-remote-reasoning[open] .hermes-remote-reasoning-summary::after {
   transform: rotate(225deg);
 }
@@ -277,6 +403,14 @@
   box-shadow:
     0 0 0 3px color-mix(in srgb, var(--text-normal) 8%, transparent),
     0 0 16px color-mix(in srgb, var(--text-normal) 34%, transparent);
+  opacity: 0.62;
+  transform: scale(0.9);
+  animation: none;
+}
+
+.hermes-remote-reasoning.is-active .hermes-remote-thinking-dot {
+  opacity: 1;
+  transform: scale(1);
   animation: hermes-thinking-pulse 1.25s ease-in-out infinite;
 }
 
@@ -284,22 +418,29 @@
   color: color-mix(in srgb, var(--text-normal) 88%, var(--text-muted));
 }
 
+.hermes-remote-activity-count,
 .hermes-remote-thinking-state {
   color: var(--text-faint);
   font-size: var(--font-ui-smaller);
 }
 
+.hermes-remote-activity-body,
 .hermes-remote-reasoning-body {
   position: relative;
   z-index: 1;
   max-height: 320px;
   margin: 0;
-  padding: 0 10px 10px 26px;
+  padding: 0 8px 7px 22px;
   overflow: auto;
   color: var(--text-muted);
   font-size: var(--font-ui-smaller);
-  line-height: 1.55;
+  line-height: 1.42;
   white-space: pre-wrap;
+}
+
+.hermes-remote-activity-body {
+  display: grid;
+  gap: 4px;
 }
 
 @keyframes hermes-thinking-pulse {
@@ -836,6 +977,111 @@
   flex: 0 0 auto;
 }
 
+.hermes-history-modal {
+  min-width: min(620px, 94vw);
+}
+
+.hermes-history-title {
+  color: var(--text-normal);
+  font-size: var(--font-ui-large);
+  font-weight: 650;
+}
+
+.hermes-history-subtitle,
+.hermes-history-row-meta,
+.hermes-history-empty {
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+}
+
+.hermes-history-search-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0 10px;
+}
+
+.hermes-history-search {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.hermes-history-icon-button,
+.hermes-history-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--text-muted);
+}
+
+.hermes-history-icon-button:hover,
+.hermes-history-icon-button:focus-visible,
+.hermes-history-delete:hover,
+.hermes-history-delete:focus-visible {
+  color: var(--text-normal);
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.hermes-history-body {
+  max-height: min(560px, 66vh);
+  overflow: auto;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  background: var(--background-primary);
+}
+
+.hermes-history-group-title {
+  padding: 10px 12px 5px;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  font-weight: 700;
+}
+
+.hermes-history-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 7px 8px 7px 12px;
+  cursor: pointer;
+}
+
+.hermes-history-row:hover {
+  background: var(--background-secondary);
+}
+
+.hermes-history-row-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.hermes-history-row-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-normal);
+  font-size: var(--font-ui-small);
+}
+
+.hermes-history-row-meta {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 1px;
+}
+
+.hermes-history-empty {
+  padding: 16px;
+}
+
 .hermes-remote-send-button svg {
   width: 25px;
   height: 25px;
@@ -898,10 +1144,10 @@
 .hermes-remote-tool-summary {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
   cursor: pointer;
   user-select: none;
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.35;
 }
 
@@ -935,8 +1181,8 @@
 }
 
 .hermes-remote-tool-body {
-  margin-top: 7px;
-  padding: 8px 10px;
+  margin-top: 5px;
+  padding: 6px 8px;
   border-left: 1px solid var(--background-modifier-border);
   color: var(--text-faint);
   font-family: var(--font-monospace);
@@ -944,4 +1190,15 @@
   line-height: 1.45;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+}
+
+.hermes-remote-nested-step {
+  border-left: 1px solid color-mix(in srgb, var(--text-muted) 18%, transparent);
+  border-radius: 0;
+}
+
+.hermes-remote-nested-step .hermes-remote-reasoning-summary,
+.hermes-remote-nested-step .hermes-remote-tool-summary {
+  min-height: 23px;
+  padding: 3px 6px;
 }
